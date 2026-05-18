@@ -1,0 +1,25 @@
+{
+  "data": {
+    "contract_number": "1",
+    "city": "Харків",
+    "date": "18 травня 2026",
+    "landlord_name": "Іванов Іван Іванович",
+    "tenant_name": "Петренко Олег Миколайович",
+    "address": "Харківська обл., м. Харків, вул. Сумська, буд 15, кв. 3",
+    "area": "52",
+    "floor": "3",
+    "transfer_days": "3",
+    "rental_months": "12",
+    "rent_amount": "8000",
+    "rent_amount_text": "вісім тисяч",
+    "payment_day": "10",
+    "deposit_amount": "8000",
+    "deposit_amount_text": "вісім тисяч",
+    "start_date": "18 травня 2026",
+    "end_date": "18 травня 2027",
+    "landlord_passport": "АА 123456",
+    "landlord_id": "1234567890",
+    "tenant_passport": "АВ 654321",
+    "tenant_id": "0987654321"
+  }
+}
