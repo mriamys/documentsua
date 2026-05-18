@@ -65,3 +65,53 @@ def generate_and_download(template_id: int, request: schemas.GenerateRequest, db
         )
     else:
         raise HTTPException(status_code=500, detail="Помилка при генерації файлу")
+
+@app.get("/test-generate/{template_id}/")
+def test_generate(template_id: int, db: Session = Depends(get_db)):
+    """Тестовий ендпоінт для генерації документа з тестовими даними (для перегляду PDF в браузері)."""
+    template = db.query(models.Template).filter(models.Template.id == template_id).first()
+    if not template:
+        raise HTTPException(status_code=404, detail="Шаблон не знайдено")
+    
+    # Використовуємо дефолтні тестові дані
+    mock_data = {
+        "contract_number": "777",
+        "city": "Київ",
+        "date": "18 травня 2026",
+        "landlord_name": "Іванов Іван Іванович",
+        "tenant_name": "Петренко Олег Миколайович",
+        "address": "м. Київ, вул. Хрещатик, буд. 1, кв. 10",
+        "area": "75",
+        "floor": "4",
+        "transfer_days": "5",
+        "rental_months": "6",
+        "rent_amount": "15000",
+        "rent_amount_text": "п'ятнадцять тисяч",
+        "payment_day": "5",
+        "deposit_amount": "15000",
+        "deposit_amount_text": "п'ятнадцять тисяч",
+        "start_date": "18 травня 2026",
+        "end_date": "18 листопада 2026",
+        "landlord_passport": "ММ 987654",
+        "landlord_id": "9876543210",
+        "tenant_passport": "КК 123456",
+        "tenant_id": "1234567890"
+    }
+    
+    result = generate_document(template.file_path, mock_data)
+    
+    if result["pdf_path"] and os.path.exists(result["pdf_path"]):
+        return FileResponse(
+            result["pdf_path"], 
+            media_type="application/pdf", 
+            headers={"Content-Disposition": "inline; filename=document.pdf"}
+        )
+    elif os.path.exists(result["docx_path"]):
+        return FileResponse(
+            result["docx_path"],
+            media_type="application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+            headers={"Content-Disposition": "attachment; filename=document.docx"}
+        )
+    else:
+        raise HTTPException(status_code=500, detail="Помилка при генерації файлу")
+
