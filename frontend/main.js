@@ -179,35 +179,22 @@ async function handleFormSubmit(e) {
     
     if (!response.ok) throw new Error('Помилка генерації документа');
     
-    // We expect the backend to return a URL to the generated document or the PDF blob
-    // Based on Part 2, the backend returns {"message": "Document generated", "output_file": "..."}
-    // Oh wait, the backend might just return the JSON with path.
-    // Let's assume we can download the file. 
-    // Actually, I'll first check what the response is.
-    const result = await response.json();
+    const blob = await response.blob();
+    const pdfUrl = URL.createObjectURL(blob);
+    currentPdfUrl = pdfUrl;
     
-    // For the demo purposes (since we just need screenshots of the UI)
-    // we'll mock the PDF viewer if the backend doesn't serve the file directly.
-    // Ideally the backend should return the file or we can fetch it.
+    document.getElementById('pdf-viewer').src = pdfUrl;
     
-    if (result.output_file) {
-      // Mocking PDF viewer for screenshot purposes
-      const htmlContent = `
-        <html><body style="font-family: sans-serif; padding: 20px;">
-          <h2>Попередній перегляд (Макет)</h2>
-          <p>Документ успішно згенеровано.</p>
-          <p>Файл: ${result.output_file}</p>
-        </body></html>
-      `;
-      const blob = new Blob([htmlContent], { type: 'text/html' });
-      currentPdfUrl = URL.createObjectURL(blob);
-      pdfViewer.src = currentPdfUrl;
-      
-      showViewerView();
-    } else {
-      alert('Документ згенеровано успішно!');
-      showTemplatesView();
-    }
+    // Show viewer view
+    document.getElementById('form-view').classList.add('hidden');
+    document.getElementById('form-view').classList.remove('active');
+    document.getElementById('viewer-view').classList.remove('hidden');
+    document.getElementById('viewer-view').classList.add('active');
+    
+    const downloadBtn = document.getElementById('download-docx');
+    downloadBtn.href = pdfUrl;
+    downloadBtn.download = "document.pdf";
+    downloadBtn.innerHTML = '<i class="ri-download-line"></i> Завантажити PDF';
     
   } catch (error) {
     alert(`Помилка: ${error.message}`);
