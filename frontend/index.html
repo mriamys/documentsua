@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Онлайн-Конструктор Договорів</title>
+  <link rel="stylesheet" href="/style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/remixicon@3.5.0/fonts/remixicon.css">
+</head>
+<body>
+  <!-- Animated Background Shapes -->
+  <div class="shape shape-1"></div>
+  <div class="shape shape-2"></div>
+  <div class="shape shape-3"></div>
+  
+  <header class="app-header">
+    <div class="header-content">
+      <div class="logo">
+        <i class="ri-scales-3-line"></i>
+        <span>Legal Constructor</span>
+      </div>
+      <h1>Створення договорів стало простішим</h1>
+      <p>Оберіть шаблон, заповніть форму та миттєво отримайте готовий юридичний документ.</p>
+    </div>
+  </header>
+
+  <main class="app-container">
+    <!-- View 1: Templates List -->
+    <section id="templates-view" class="view active fade-in">
+      <div class="section-header">
+        <h2><i class="ri-folder-open-line"></i> Доступні шаблони</h2>
+        <div class="header-line"></div>
+      </div>
+      <div id="templates-list" class="templates-grid">
+        <!-- Templates will be rendered here dynamically -->
+      </div>
+    </section>
+
+    <!-- View 2: Dynamic Form -->
+    <section id="form-view" class="view hidden fade-in">
+      <button id="back-to-templates" class="btn-back">
+        <i class="ri-arrow-left-line"></i> Повернутися до списку
+      </button>
+      
+      <div class="form-wrapper glass-panel">
+        <div class="form-header">
+          <div class="icon-box"><i class="ri-edit-box-line"></i></div>
+          <h2 id="form-title">Заповнення анкети</h2>
+        </div>
+        
+        <form id="dynamic-form">
+          <div id="form-fields" class="form-grid">
+            <!-- Form fields will be rendered here dynamically -->
+          </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary" id="submit-btn">
+              <span>Згенерувати документ</span>
+              <i class="ri-magic-line"></i>
+            </button>
+          </div>
+        </form>
+      </div>
+    </section>
+
+    <!-- View 3: PDF Viewer -->
+    <section id="viewer-view" class="view hidden fade-in">
+      <div class="viewer-header glass-panel">
+        <button id="back-to-form" class="btn-back">
+          <i class="ri-arrow-left-line"></i> Назад до редагування
+        </button>
+        <div class="viewer-title">
+          <i class="ri-file-check-line"></i>
+          <h2>Готовий документ</h2>
+        </div>
+        <a id="download-docx" href="#" class="btn-primary">
+          <i class="ri-download-line"></i> Завантажити DOCX
+        </a>
+      </div>
+      <div class="pdf-container glass-panel">
+        <iframe id="pdf-viewer" src="" width="100%" height="700px"></iframe>
+      </div>
+    </section>
+  </main>
+
+  <script type="module" src="/main.js"></script>
+</body>
+</html>
